@@ -1,16 +1,19 @@
 const Member = require("../models/Member");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const memberControllers = {
+let refreshTokens = [];
+
+const authControllers = {
   //create a user
   createUser: async (req, res) => {
     try {
-      const { membername, password } = req.body;
+      const { memberName, password, name, yob } = req.body;
 
-      if (!password || !membername) {
+      if (!password || !memberName) {
         return res
           .status(400)
-          .json({ message: "Membername and password are required" });
+          .json({ message: "Member Name and password are required" });
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -18,9 +21,10 @@ const memberControllers = {
 
       // Create a new user
       const newUser = new Member({
-        membername,
+        memberName,
         password: hashed,
-        isAdmin: false,
+        name,
+        yob,
       });
 
       // Save the user to the database
@@ -34,4 +38,4 @@ const memberControllers = {
   },
 };
 
-module.exports = memberControllers;
+module.exports = authControllers;
