@@ -16,3 +16,5 @@ const watcheSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+module.exports = mongoose.model("Watches", watcheSchema);
