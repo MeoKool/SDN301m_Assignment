@@ -36,6 +36,27 @@ const authControllers = {
       res.status(500).json({ message: error.message });
     }
   },
+  //Login member
+  loginMember: async (req, res) => {
+    try {
+      const member = await Member.findOne({ memberName: req.body.memberName });
+      if (!member) {
+        return res.status(404).json({ message: "Wrong memberName!!!!" });
+      }
+      const validPassword = await bcrypt.compare(
+        req.body.password,
+        member.password
+      );
+      if (!validPassword) {
+        return res.status(404).json({ message: "Wrong password!!!!" });
+      }
+      if (member && validPassword) {
+        res.status(200).json({ message: "Login successfull" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = authControllers;
