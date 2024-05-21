@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/auth");
 const authWatches = require("./routes/watch");
 const bodyParser = require("body-parser");
+const multer = require("multer");
 
 const app = express();
 
@@ -24,8 +25,8 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", "./views");
-
-//Router
+app.use(express.static("public"));
+//Router API
 app.use("/v1/auth", authRoutes);
 app.use("/v1/watch", authWatches);
 
@@ -41,6 +42,9 @@ app.get("/register", (req, res) => {
 });
 app.get("/HomePage", (req, res) => {
   res.render("homepage");
+});
+app.get("/CreateWatches", (req, res) => {
+  res.render("createWatch");
 });
 
 app.listen(5000, () => {

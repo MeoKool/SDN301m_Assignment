@@ -2,3 +2,33 @@
 <a href="/login">
   <button>Login</button>
 </a>
+
+<div id="cardsContainer"></div>
+
+<script>
+  // Fetch data from the API
+  fetch("http://localhost:5000/v1/watch/getAllWatches")
+    .then((response) => response.json())
+    .then((data) => {
+      // Iterate over each object in the data array
+      data.forEach((object) => {
+        // Create a card element
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        // Set the card content
+        card.innerHTML = `
+          <h2>${object.watchName}</h2>
+          <p>${object.price}</p>
+          <img src="images/meopeo.jpg" alt="${object.watchName}" />
+        `;
+
+        // Append the card to the container
+        const cardsContainer = document.getElementById("cardsContainer");
+        cardsContainer.appendChild(card);
+      });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+</script>
