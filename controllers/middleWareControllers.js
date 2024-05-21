@@ -6,16 +6,28 @@ const middleWareControllers = {
     const token = req.headers.token;
     if (token) {
       const accessToken = token.split(" ")[1];
-      jwt.verify(accessToken, "12022002", (err, user) => {
+      jwt.verify(accessToken, "12022002", (err, member) => {
         if (err) {
           return res.status(403).json("Token is not valid!");
         }
-        req.user = user;
+        req.member = member;
         next();
       });
     } else {
-      return res.status(401).json("You are not authenticated!");
+      return res.status(403).json("You are not authenticated!");
     }
+  },
+
+  //Verify Admin
+  verifyAdmin: (req, res, next) => {
+    middleWareControllers.verifyToken(req, res, () => {
+      if (req.member.id == req.params.id || req.member.isAdmin) {
+        next();
+        return;
+      } else {
+        return res.status(403).json("You are not authorized!");
+      }
+    });
   },
 };
 
