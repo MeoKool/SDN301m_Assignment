@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
     memberName: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     name: { type: String, required: true },
-    yob: { type: Number, required: true },
+    yob: { type: Date, required: true },
     isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }

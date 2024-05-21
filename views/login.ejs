@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form action="http://localhost:5000/v1/auth/Login" method="POST">
+      <label for="membername">Member Name:</label>
+      <input
+        type="text"
+        id="memberName"
+        name="memberName"
+        required
+      /><br /><br />
+
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+      /><br /><br />
+
+      <input type="submit" value="Login" />
+    </form>
+    <a href="/register">
+      <button>Register</button>
+    </a>
+  </body>
+</html>

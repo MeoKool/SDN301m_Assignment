@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/auth");
 const authWatches = require("./routes/watch");
+const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -20,10 +21,25 @@ mongoose
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.set("views", "./views");
 
 //Router
 app.use("/v1/auth", authRoutes);
 app.use("/v1/watch", authWatches);
+
+//Render
+app.get("/", (req, res) => {
+  res.render("login");
+});
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+app.get("/HomePage", (req, res) => {
+  res.render("homepage");
+});
+
 app.listen(5000, () => {
   console.log("Server is running on port 5000");
 });
