@@ -44,6 +44,15 @@ const authControllers = {
         return res.status(404).json({ message: "Wrong password!!!!" });
       }
       if (member && validPassword) {
+        const accessToken = jwt.sign(
+          {
+            id: member.id,
+            admin: member.isAdmin,
+          },
+          "12022002",
+          { expiresIn: "1h" }
+        );
+        console.log(accessToken);
         res.redirect("/HomePage");
       }
     } catch (error) {

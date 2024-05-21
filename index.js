@@ -31,6 +31,9 @@ app.use("/v1/watch", authWatches);
 
 //Render
 app.get("/", (req, res) => {
+  res.render("homepage");
+});
+app.get("/login", (req, res) => {
   res.render("login");
 });
 app.get("/register", (req, res) => {
