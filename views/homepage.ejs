@@ -66,6 +66,7 @@
         card.classList.add("card");
         // Remove 'public\' from the image path
         const imagePath = object.image.replace("public\\", "");
+        console.log(object.image);
         // Set the card content
         card.innerHTML = `
         <h2>${object.watchName}</h2>

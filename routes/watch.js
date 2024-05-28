@@ -20,5 +20,6 @@ router.post(
   upload.single("image"),
   watchesControllers.createWatch
 );
+router.get("/getByIdWatches/:id/", watchesControllers.getByIdWatches);
 
 module.exports = router;

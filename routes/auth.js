@@ -3,5 +3,4 @@ const router = require("express").Router();
 
 router.post("/createUser", authControllers.createUser);
 router.post("/Login", authControllers.loginMember);
-
 module.exports = router;

@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 
 const app = express();
-app.use(express.static("public"));
+
 mongoose
   .connect("mongodb://localhost:27017/sdn301m")
   .then(() => {
@@ -46,6 +46,10 @@ app.get("/HomePage", (req, res) => {
 });
 app.get("/CreateWatches", (req, res) => {
   res.render("createWatch");
+});
+app.get("/details/:id", (req, res) => {
+  const id = req.params.id;
+  res.render("detailsWatch", { watchId: id });
 });
 
 app.listen(5000, () => {
