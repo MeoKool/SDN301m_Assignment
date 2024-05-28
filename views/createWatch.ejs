@@ -1,4 +1,8 @@
-<form action="http://localhost:5000/v1/watch/createWatch" method="POST">
+<form
+  action="http://localhost:5000/v1/watch/createWatch"
+  method="POST"
+  enctype="multipart/form-data"
+>
   <label for="watchName">Watch Name:</label>
   <input type="text" id="watchName" name="watchName" required />
 
@@ -9,16 +13,10 @@
   <input type="number" id="price" name="price" required />
 
   <label for="Automatic">Automatic:</label>
-  <input type="checkbox" id="Automatic" name="Automatic" />
+  <input type="checkbox" id="Automatic" name="Automatic" value="true" />
 
   <label for="watchDescription">Watch Description:</label>
   <textarea id="watchDescription" name="watchDescription" required></textarea>
-
-  <!-- <label for="brand">Brand:</label> -->
-  <!-- <select id="brand" name="brand" required> -->
-  <!-- <option value="">Select a brand</option> -->
-  <!-- Add options dynamically based on available brands -->
-  <!-- </select> -->
 
   <button type="submit">Create Watch</button>
 </form>

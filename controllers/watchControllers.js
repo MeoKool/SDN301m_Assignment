@@ -24,9 +24,10 @@ const watchesControllers = {
   },
   // createWatch
   createWatch: async (req, res) => {
-    const watch = new Watches({
+    const imagePath = req.file ? req.file.path : "";
+    const watch = await new Watches({
       watchName: req.body.watchName,
-      image: req.file.path,
+      image: imagePath,
       price: req.body.price,
       Automatic: req.body.Automatic,
       watchDescription: req.body.watchDescription,
