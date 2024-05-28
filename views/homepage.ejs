@@ -16,12 +16,15 @@
         const card = document.createElement("div");
         card.classList.add("card");
 
+        // Remove 'public\' from the image path
+        const imagePath = object.image.replace("public\\", "");
+
         // Set the card content
         card.innerHTML = `
-          <h2>${object.watchName}</h2>
-          <p>${object.price}</p>
-          <img src="images/meopeo.jpg" alt="${object.watchName}" />
-        `;
+<h2>${object.watchName}</h2>
+<p>${object.price}</p>
+<img src="${imagePath}" alt="${object.watchName}">
+`;
 
         // Append the card to the container
         const cardsContainer = document.getElementById("cardsContainer");

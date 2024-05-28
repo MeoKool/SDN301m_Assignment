@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 
 const app = express();
-
+app.use(express.static("public"));
 mongoose
   .connect("mongodb://localhost:27017/sdn301m")
   .then(() => {
