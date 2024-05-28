@@ -1,11 +1,20 @@
-<h1>WATCHES SHOP</h1>
-<a href="/login">
-  <button>Login</button>
-</a>
-
-<a href="/register">
-  <button>Register</button>
-</a>
+<div style="display: flex; justify-content: space-between; align-items: center">
+  <h1>WATCHES SHOP</h1>
+  <div>
+    <div style="display: flex; gap: 10px">
+      <a href="/login">
+        <button>Login</button>
+      </a>
+      <a href="/register">
+        <button>Register</button>
+      </a>
+    </div>
+    <p id="memberContainer" style="display: none"></p>
+    <a href="/" id="logoutButton" style="display: none">
+      <button>Logout</button>
+    </a>
+  </div>
+</div>
 
 <div id="cardsContainer"></div>
 <style>
@@ -55,19 +64,39 @@
   }
 </style>
 <script>
+  var memberName = sessionStorage.getItem("memberName");
+  var loginButton = document.querySelector('a[href="/login"]');
+  var registerButton = document.querySelector('a[href="/register"]');
+  var memberContainer = document.getElementById("memberContainer");
+  var logoutButton = document.getElementById("logoutButton");
+
+  if (memberName) {
+    loginButton.style.display = "none";
+    registerButton.style.display = "none";
+    logoutButton.style.display = "inline-block";
+    memberContainer.innerHTML = `<h2>Welcome ${memberName}</h2>`;
+    memberContainer.style.display = "inline-block";
+  } else {
+    logoutButton.style.display = "none";
+    memberContainer.style.display = "none";
+  }
+  logoutButton.addEventListener("click", function () {
+    var confirmLogout = confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      sessionStorage.clear();
+      location.reload();
+    }
+  });
   // Fetch data from the API
   fetch("http://localhost:5000/v1/watch/getAllWatches")
     .then((response) => response.json())
     .then((data) => {
       // Iterate over each object in the data array
       data.forEach((object) => {
-        // Create a card element
         const card = document.createElement("div");
         card.classList.add("card");
         // Remove 'public\' from the image path
         const imagePath = object.image.replace("public\\", "");
-        console.log(object.image);
-        // Set the card content
         card.innerHTML = `
         <h2>${object.watchName}</h2>
         <img src="${imagePath}" alt="${object.watchName}">
@@ -75,8 +104,6 @@
         <p>Brand</p>
         <a href="/details/${object._id}"><button>Details</button></a>
         `;
-
-        // Append the card to the container
         const cardsContainer = document.getElementById("cardsContainer");
         cardsContainer.appendChild(card);
       });

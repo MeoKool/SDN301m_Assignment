@@ -51,12 +51,38 @@ const authControllers = {
           "12022002",
           { expiresIn: "1h" }
         );
-        console.log(accessToken);
-        res.redirect("/HomePage");
+        res.status(200).json({
+          accessToken,
+          memberName: member.memberName,
+          name: member.name,
+        });
       }
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+  },
+  // Change password
+  changePassword: async (req, res) => {
+    try {
+      const { memberName, newPassword } = req.body;
+      const member = await Member.findOne({ memberName });
+      if (!member) {
+        return res.status(404).json({ message: "Member not found" });
+      }
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+      member.password = hashedPassword;
+      await member.save();
+      res.status(200).json({ message: "Password updated successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  //logout member
+  logoutMember: async (req, res) => {
+    const refreshToken = req.body.token;
+    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+    res.status(200).json({ message: "Logout successful" });
   },
 };
 

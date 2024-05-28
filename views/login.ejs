@@ -2,10 +2,40 @@
 <html>
   <head>
     <title>Login</title>
+    <script>
+      function submitForm(event) {
+        event.preventDefault();
+        const memberName = document.getElementById("memberName").value;
+        const password = document.getElementById("password").value;
+
+        fetch("http://localhost:5000/v1/auth/Login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ memberName, password }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.accessToken) {
+              sessionStorage.setItem("accessToken", data.accessToken);
+              sessionStorage.setItem("memberName", memberName);
+              sessionStorage.setItem("name", data.name);
+              alert("Login successful");
+              window.location.href = "/";
+            } else {
+              alert("Wrong username or password");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
   </head>
   <body>
     <h1>Login</h1>
-    <form action="http://localhost:5000/v1/auth/Login" method="POST">
+    <form onsubmit="submitForm(event)">
       <label for="membername">Member Name:</label>
       <input
         type="text"
