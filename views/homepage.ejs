@@ -1,10 +1,59 @@
-<h1>HOMEPAGE</h1>
+<h1>WATCHES SHOP</h1>
 <a href="/login">
   <button>Login</button>
 </a>
 
-<div id="cardsContainer"></div>
+<a href="/register">
+  <button>Register</button>
+</a>
 
+<div id="cardsContainer"></div>
+<style>
+  #cardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px;
+    transition: box-shadow 0.3s;
+    width: 500px;
+    height: 500px;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  }
+
+  .card img {
+    width: 100%;
+    height: 65%;
+  }
+
+  .card h2 {
+    margin-top: 0;
+  }
+
+  .card button {
+    background-color: #4caf50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 0px;
+    cursor: pointer;
+  }
+
+  .card button:hover {
+    background-color: #45a049;
+  }
+</style>
 <script>
   // Fetch data from the API
   fetch("http://localhost:5000/v1/watch/getAllWatches")
@@ -15,16 +64,16 @@
         // Create a card element
         const card = document.createElement("div");
         card.classList.add("card");
-
         // Remove 'public\' from the image path
         const imagePath = object.image.replace("public\\", "");
-
         // Set the card content
         card.innerHTML = `
-<h2>${object.watchName}</h2>
-<p>${object.price}</p>
-<img src="${imagePath}" alt="${object.watchName}">
-`;
+        <h2>${object.watchName}</h2>
+        <img src="${imagePath}" alt="${object.watchName}">
+        <p>${object.price}</p>
+        <p>Brand</p>
+        <a href="/details/${object._id}"><button>Details</button></a>
+        `;
 
         // Append the card to the container
         const cardsContainer = document.getElementById("cardsContainer");

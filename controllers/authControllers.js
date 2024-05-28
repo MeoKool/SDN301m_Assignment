@@ -20,11 +20,10 @@ const authControllers = {
         yob,
       });
 
-      // Save the user to the database
       await newUser.save();
 
       // Send the created user as a response
-      res.redirect("/");
+      res.status(200).json(newUser);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

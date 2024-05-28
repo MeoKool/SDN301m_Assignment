@@ -1,22 +1,62 @@
-<form
-  action="http://localhost:5000/v1/watch/createWatch"
-  method="POST"
-  enctype="multipart/form-data"
->
-  <label for="watchName">Watch Name:</label>
-  <input type="text" id="watchName" name="watchName" required />
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Watch</title>
+  </head>
+  <body>
+    <form
+      id="createWatchForm"
+      action="http://localhost:5000/v1/watch/createWatch"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <label for="watchName">Watch Name:</label>
+      <input type="text" id="watchName" name="watchName" required />
 
-  <label for="image">Image:</label>
-  <input type="file" id="image" name="image" required />
+      <label for="image">Image:</label>
+      <input type="file" id="image" name="image" required />
 
-  <label for="price">Price:</label>
-  <input type="number" id="price" name="price" required />
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" required />
 
-  <label for="Automatic">Automatic:</label>
-  <input type="checkbox" id="Automatic" name="Automatic" value="true" />
+      <label for="Automatic">Automatic:</label>
+      <input type="checkbox" id="Automatic" name="Automatic" value="true" />
 
-  <label for="watchDescription">Watch Description:</label>
-  <textarea id="watchDescription" name="watchDescription" required></textarea>
+      <label for="watchDescription">Watch Description:</label>
+      <textarea
+        id="watchDescription"
+        name="watchDescription"
+        required
+      ></textarea>
 
-  <button type="submit">Create Watch</button>
-</form>
+      <button id="createWatchButton" type="submit">Create Watch</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("createWatchButton")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // prevent the form from submitting the traditional way
+
+          var form = document.getElementById("createWatchForm");
+          var formData = new FormData(form);
+
+          fetch(form.action, {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => {
+              if (response.status === 200) {
+                alert("Watch created successfully");
+                window.location.href = "/";
+              } else {
+                alert("Error creating watch");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
+</html>
