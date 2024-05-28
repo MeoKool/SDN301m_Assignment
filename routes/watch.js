@@ -21,5 +21,5 @@ router.post(
   watchesControllers.createWatch
 );
 router.get("/getByIdWatches/:id/", watchesControllers.getByIdWatches);
-
+router.get("/searchWatches/:name", watchesControllers.searchWatches);
 module.exports = router;

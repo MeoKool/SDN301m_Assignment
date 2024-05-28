@@ -51,6 +51,10 @@ app.get("/details/:id", (req, res) => {
   const id = req.params.id;
   res.render("detailsWatch", { watchId: id });
 });
+app.get("/search/:name", (req, res) => {
+  const name = req.params.name;
+  res.render("searchWatch", { name: name });
+});
 
 app.listen(5000, () => {
   console.log("Server is running on port 5000");

@@ -52,6 +52,20 @@ const watchesControllers = {
       res.status(500).json({ message: error.message });
     }
   },
+  //SearchWatches
+  searchWatches: async (req, res) => {
+    try {
+      const watches = await Watches.find({
+        watchName: { $regex: req.params.name, $options: "i" },
+      });
+      if (watches.length === 0) {
+        return res.status(404).json({ message: "Watch not found" });
+      }
+      res.status(200).json(watches);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = watchesControllers;

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #cardsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 15px;
+      transition: box-shadow 0.3s;
+      width: 500px;
+      height: 500px;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 65%;
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    .card button {
+      background-color: #4caf50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 0px;
+      cursor: pointer;
+    }
+
+    .card button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <body>
+    <div
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+      <h1>WATCHES SHOP</h1>
+      <div>
+        <p id="memberContainer" style="display: none"></p>
+        <a href="/" id="logoutButton" style="display: none">
+          <button>Logout</button>
+        </a>
+      </div>
+    </div>
+    <div id="searchContainer" style="display: none">
+      <input type="text" id="searchInput" placeholder="Search watches..." />
+    </div>
+    <div id="cardsContainer"></div>
+  </body>
+</html>
+<script>
+  var memberName = sessionStorage.getItem("memberName");
+  var memberContainer = document.getElementById("memberContainer");
+  var logoutButton = document.getElementById("logoutButton");
+  var searchContainer = document.getElementById("searchContainer");
+  var searchInput = document.getElementById("searchInput");
+  const name = "<%= name %>";
+
+  if (memberName) {
+    searchContainer.style.display = "inline-block";
+    logoutButton.style.display = "inline-block";
+    memberContainer.innerHTML = `<h2>Welcome ${memberName}</h2>`;
+    memberContainer.style.display = "inline-block";
+  }
+  searchInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      var searchParam = e.target.value;
+      if (searchParam.trim() === "") {
+        alert("Please enter a search term.");
+      } else {
+        window.location.href = `/search/${searchParam}`;
+      }
+    }
+  });
+  logoutButton.addEventListener("click", function () {
+    var confirmLogout = confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      sessionStorage.clear();
+      location.reload();
+    }
+  });
+  fetch(`http://localhost:5000/v1/watch/searchWatches/${name}`)
+    .then((response) => response.json())
+    .then((data) => {
+      // Clear the current cards
+      const cardContainer = document.getElementById("cardsContainer");
+      cardContainer.innerHTML = "";
+      data.forEach((object) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        // Remove 'public\' from the image path
+        const imagePath = "/" + object.image.replace("public\\", "");
+        card.innerHTML = `
+        <h2>${object.watchName}</h2>
+        <img src="${imagePath}" alt="${object.watchName}">
+        <p>${object.price}</p>
+        <p>Brand</p>
+        <a href="/details/${object._id}"><button>Details</button></a>
+        `;
+        cardContainer.appendChild(card);
+      });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+</script>
