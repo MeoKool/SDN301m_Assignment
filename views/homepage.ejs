@@ -10,6 +10,9 @@
       </a>
     </div>
     <p id="memberContainer" style="display: none"></p>
+    <a href="/user" id="userProfile" style="display: none">
+      <button>Profile</button>
+    </a>
     <a href="/" id="logoutButton" style="display: none">
       <button>Logout</button>
     </a>
@@ -73,6 +76,7 @@
   var logoutButton = document.getElementById("logoutButton");
   var searchContainer = document.getElementById("searchContainer");
   var searchInput = document.getElementById("searchInput");
+  var userProfile = document.getElementById("userProfile");
   if (memberName) {
     searchContainer.style.display = "inline-block";
     loginButton.style.display = "none";
@@ -80,6 +84,7 @@
     logoutButton.style.display = "inline-block";
     memberContainer.innerHTML = `<h2>Welcome ${memberName}</h2>`;
     memberContainer.style.display = "inline-block";
+    userProfile.style.display = "inline-block";
   } else {
     logoutButton.style.display = "none";
     memberContainer.style.display = "none";

@@ -88,10 +88,11 @@ const authControllers = {
     refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
     res.status(200).json({ message: "Logout successful" });
   },
-  //update member
+  // update member
   updateMember: async (req, res) => {
     try {
-      const { memberName, name, yob } = req.body;
+      const { memberName } = req.params;
+      const { name, yob } = req.body;
       const member = await Member.findOne({ memberName });
       if (!member) {
         return res.status(404).json({ message: "Member not found" });
@@ -100,6 +101,20 @@ const authControllers = {
       member.yob = yob;
       await member.save();
       res.status(200).json({ message: "Member updated successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  //getByMemberName
+  getByMemberName: async (req, res) => {
+    try {
+      const member = await Member.findOne({
+        memberName: req.params.memberName,
+      });
+      if (!member) {
+        return res.status(404).json({ message: "Member not found" });
+      }
+      res.status(200).json(member);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

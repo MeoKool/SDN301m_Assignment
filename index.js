@@ -51,6 +51,9 @@ app.get("/search/:name", (req, res) => {
   const name = req.params.name;
   res.render("searchWatch", { name: name });
 });
+app.get("/user", (req, res) => {
+  res.render("userProfile");
+});
 app.get("/user/changePassword", (req, res) => {
   res.render("changePassword");
 });
