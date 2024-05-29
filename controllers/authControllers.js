@@ -64,10 +64,14 @@ const authControllers = {
   // Change password
   changePassword: async (req, res) => {
     try {
-      const { memberName, newPassword } = req.body;
+      const { memberName, oldPassword, newPassword } = req.body;
       const member = await Member.findOne({ memberName });
       if (!member) {
         return res.status(404).json({ message: "Member not found" });
+      }
+      const validPassword = await bcrypt.compare(oldPassword, member.password);
+      if (!validPassword) {
+        return res.status(400).json({ message: "Incorrect old password" });
       }
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -83,6 +87,22 @@ const authControllers = {
     const refreshToken = req.body.token;
     refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
     res.status(200).json({ message: "Logout successful" });
+  },
+  //update member
+  updateMember: async (req, res) => {
+    try {
+      const { memberName, name, yob } = req.body;
+      const member = await Member.findOne({ memberName });
+      if (!member) {
+        return res.status(404).json({ message: "Member not found" });
+      }
+      member.name = name;
+      member.yob = yob;
+      await member.save();
+      res.status(200).json({ message: "Member updated successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   },
 };
 

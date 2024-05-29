@@ -6,6 +6,7 @@
   <body>
     <h1>Watch Details</h1>
     <div id="watchDetails"></div>
+    <button onclick="goBack()">Back</button>
 
     <script>
       // Get the watch ID from the URL parameter
@@ -28,7 +29,9 @@
         .catch((error) => {
           console.error("Error:", error);
         });
+      function goBack() {
+        window.history.back();
+      }
     </script>
-    <a href="/"> <button>Back</button></a>
   </body>
 </html>

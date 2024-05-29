@@ -6,7 +6,6 @@ const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/auth");
 const authWatches = require("./routes/watch");
 const bodyParser = require("body-parser");
-const multer = require("multer");
 
 const app = express();
 
@@ -41,9 +40,6 @@ app.get("/login", (req, res) => {
 app.get("/register", (req, res) => {
   res.render("register");
 });
-app.get("/HomePage", (req, res) => {
-  res.render("homepage");
-});
 app.get("/CreateWatches", (req, res) => {
   res.render("createWatch");
 });
@@ -55,7 +51,9 @@ app.get("/search/:name", (req, res) => {
   const name = req.params.name;
   res.render("searchWatch", { name: name });
 });
-
+app.get("/user/changePassword", (req, res) => {
+  res.render("changePassword");
+});
 app.listen(5000, () => {
   console.log("Server is running on port 5000");
 });
