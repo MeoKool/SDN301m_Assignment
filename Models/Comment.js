@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-commentSchema = new mongoose.Schema(
+const commentSchema = new mongoose.Schema(
   {
     rating: { type: Number, min: 1, max: 3, require: true },
     content: { type: String, require: true },

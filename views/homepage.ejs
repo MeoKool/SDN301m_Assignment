@@ -120,7 +120,7 @@
         <h2>${object.watchName}</h2>
         <img src="${imagePath}" alt="${object.watchName}">
         <p>${object.price}</p>
-        <p>Brand</p>
+        <p>Brand: ${object.brand.brandName}</p>
         <a href="/details/${object._id}"><button>Details</button></a>
         `;
         const cardsContainer = document.getElementById("cardsContainer");

@@ -57,7 +57,11 @@
     >
       <h1>WATCHES SHOP</h1>
       <div>
-        <p id="memberContainer" style="display: none"></p>
+        <p id="memberContainer"></p>
+
+        <a href="/user" id="userProfile">
+          <button>Profile</button>
+        </a>
         <a href="/" id="logoutButton" style="display: none">
           <button>Logout</button>
         </a>
@@ -115,7 +119,7 @@
         <h2>${object.watchName}</h2>
         <img src="${imagePath}" alt="${object.watchName}">
         <p>${object.price}</p>
-        <p>Brand</p>
+        <p>Brand: ${object.brand.brandName}</p>
         <a href="/details/${object._id}"><button>Details</button></a>
         `;
         cardContainer.appendChild(card);

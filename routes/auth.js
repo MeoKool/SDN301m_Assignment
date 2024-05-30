@@ -6,4 +6,5 @@ router.post("/Login", authControllers.loginMember);
 router.post("/changePassword", authControllers.changePassword);
 router.put("/updateMember/:memberName", authControllers.updateMember);
 router.get("/getByMemberName/:memberName", authControllers.getByMemberName);
+router.get("/getAllMembers", authControllers.getAllMembers);
 module.exports = router;

@@ -1,8 +1,16 @@
 const mongoose = require("mongoose");
 
 const brandsSchema = new mongoose.Schema(
-  { brandName: String },
+  {
+    brandName: { type: String },
+    watches: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Watches",
+      },
+    ],
+  },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Brand", brandsSchema);
+module.exports = mongoose.model("Brands", brandsSchema);

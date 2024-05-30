@@ -119,6 +119,15 @@ const authControllers = {
       res.status(500).json({ message: error.message });
     }
   },
+  //getAllMembers
+  getAllMembers: async (req, res) => {
+    try {
+      const members = await Member.find({ isAdmin: false });
+      res.status(200).json(members);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = authControllers;

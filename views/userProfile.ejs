@@ -41,8 +41,8 @@
   });
 
   document.getElementById("submitButton").addEventListener("click", () => {
-    var name = document.getElementById("nameInput").value; // Use getElementById instead of querySelector
-    var yob = document.getElementById("yobInput").value; // Use getElementById instead of querySelector
+    var name = document.getElementById("nameInput").value;
+    var yob = document.getElementById("yobInput").value;
 
     fetch(`http://localhost:5000/v1/auth/updateMember/${memberName}`, {
       method: "PUT",
@@ -57,6 +57,7 @@
       .then((response) => response.json())
       .then((data) => {
         alert("User information updated successfully");
+        location.reload();
       });
   });
   document.getElementById("cancelButton").addEventListener("click", () => {

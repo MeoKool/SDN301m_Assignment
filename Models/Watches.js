@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const commentSchema = require("./Comment");
 
-const watcheSchema = new mongoose.Schema(
+const watchSchema = new mongoose.Schema(
   {
     watchName: { type: String, require: true },
     image: { type: String, require: true },
@@ -17,4 +18,4 @@ const watcheSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Watches", watcheSchema);
+module.exports = mongoose.model("Watches", watchSchema);
