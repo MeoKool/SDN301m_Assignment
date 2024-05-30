@@ -4,6 +4,13 @@
   <p>Year of Birth: <span id="yob"></span></p>
   <button id="editButton" style="display: inline-block">Edit</button>
   <button id="submitButton" style="display: none">Submit</button>
+  <button
+    id="changePasswordButton"
+    onclick="location.href='user/changePassword'"
+    style="display: none"
+  >
+    Change Password
+  </button>
   <button id="cancelButton" style="display: none">Cancel</button>
   <button id="backButton" onclick="goBack()">Back</button>
 </div>
@@ -38,6 +45,8 @@
     document.getElementById("editButton").style.display = "none";
     document.getElementById("backButton").style.display = "none";
     document.getElementById("cancelButton").style.display = "inline-block";
+    document.getElementById("changePasswordButton").style.display =
+      "inline-block";
   });
 
   document.getElementById("submitButton").addEventListener("click", () => {
@@ -76,5 +85,6 @@
     document.getElementById("cancelButton").style.display = "none";
     document.getElementById("editButton").style.display = "inline-block";
     document.getElementById("backButton").style.display = "inline-block";
+    document.getElementById("changePasswordButton").style.display = "none";
   });
 </script>
