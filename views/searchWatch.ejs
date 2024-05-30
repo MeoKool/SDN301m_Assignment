@@ -70,6 +70,9 @@
     <div id="searchContainer" style="display: none">
       <input type="text" id="searchInput" placeholder="Search watches..." />
     </div>
+    <select id="brandName">
+      <option value="">Select a brand</option>
+    </select>
     <div id="cardsContainer"></div>
   </body>
 </html>
@@ -128,4 +131,24 @@
     .catch((error) => {
       console.error("Error:", error);
     });
+  fetch("http://localhost:5000/v1/brand/getAllBrands")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      const select = document.getElementById("brandName");
+      data.forEach((brand) => {
+        const option = document.createElement("option");
+        option.value = brand._id;
+        option.textContent = brand.brandName;
+        select.appendChild(option);
+      });
+    })
+    .catch((error) => console.error("Error:", error));
+
+  // Handle select change event
+  document.getElementById("brandName").addEventListener("change", function () {
+    if (this.value) {
+      window.location.href = "/getWatchByBrand/" + this.value;
+    }
+  });
 </script>
