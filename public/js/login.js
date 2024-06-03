@@ -27,6 +27,7 @@ function submitForm(event) {
       });
 
       if (data.accessToken) {
+        sessionStorage.setItem("id", data.id);
         sessionStorage.setItem("accessToken", data.accessToken);
         sessionStorage.setItem("memberName", memberName);
         sessionStorage.setItem("name", data.name);

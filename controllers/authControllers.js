@@ -52,6 +52,7 @@ const authControllers = {
           { expiresIn: "1h" }
         );
         res.status(200).json({
+          id: member._id,
           accessToken,
           memberName: member.memberName,
           name: member.name,

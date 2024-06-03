@@ -23,7 +23,9 @@ const commentController = {
   },
   //getAllComments
   getAllComments: async (req, res) => {
-    const watch = await Watch.findById(req.params.watchId);
+    const watch = await Watch.findById(req.params.watchId).populate(
+      "comments.author"
+    );
     res.status(200).send(watch.comments);
   },
   //getByIDComments
