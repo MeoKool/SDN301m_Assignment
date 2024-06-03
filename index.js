@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/auth");
 const authWatches = require("./routes/watch");
 const authBrand = require("./routes/brand");
+const authComment = require("./routes/comment");
 
 const bodyParser = require("body-parser");
 
@@ -32,6 +33,7 @@ app.use(express.static("public"));
 app.use("/v1/auth", authRoutes);
 app.use("/v1/watch", authWatches);
 app.use("/v1/brand", authBrand);
+app.use("/v1/feedback", authComment);
 //Render
 app.get("/", (req, res) => {
   res.render("homepage");
