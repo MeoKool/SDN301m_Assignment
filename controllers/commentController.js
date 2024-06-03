@@ -19,7 +19,7 @@ const commentController = {
     };
     watch.comments.push(comment);
     await watch.save();
-    res.status(201).send(watch);
+    res.status(200).send(watch);
   },
   //getAllComments
   getAllComments: async (req, res) => {
