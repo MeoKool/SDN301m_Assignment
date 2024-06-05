@@ -1,73 +1,92 @@
-<div style="display: flex; justify-content: space-between; align-items: center">
-  <h1>WATCHES SHOP</h1>
-  <div>
-    <div style="display: flex; gap: 10px">
-      <a href="/login">
-        <button>Login</button>
-      </a>
-      <a href="/register">
-        <button>Register</button>
-      </a>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+    />
+  </head>
+  <body>
+    <%- include('navbar') %>
+    <div
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+      <div>
+        <p id="memberContainer" style="display: none"></p>
+        <a href="/user" id="userProfile" style="display: none">
+          <button>Profile</button>
+        </a>
+        <button id="logoutButton" style="display: none">Logout</button>
+      </div>
     </div>
-    <p id="memberContainer" style="display: none"></p>
-    <a href="/user" id="userProfile" style="display: none">
-      <button>Profile</button>
-    </a>
-    <button id="logoutButton" style="display: none">Logout</button>
-  </div>
-</div>
-<div id="searchContainer" style="display: none">
-  <input type="text" id="searchInput" placeholder="Search watches..." />
-</div>
-<select id="brandName">
-  <option value="">Select a brand</option>
-</select>
-<div id="cardsContainer"></div>
-<style>
-  #cardsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-  .card {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 15px;
-    transition: box-shadow 0.3s;
-    width: 500px;
-    height: 500px;
-  }
+    <div id="searchContainer" style="display: none">
+      <input type="text" id="searchInput" placeholder="Search watches..." />
+    </div>
+    <select id="brandName">
+      <option value="">Select a brand</option>
+    </select>
+    <div id="cardsContainer"></div>
+  </body>
+  <style>
+    #cardsContainer {
+      display: flex;
+      flex-wrap: wrap;
+    }
 
-  .card:hover {
-    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
-  }
+    .card {
+      flex: 0 0 23%;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      width: 24%;
+      margin: 1%;
+    }
 
-  .card img {
-    width: 100%;
-    height: 65%;
-  }
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
 
-  .card h2 {
-    margin-top: 0;
-  }
+    .container {
+      padding: 2px 16px;
+    }
 
-  .card button {
-    background-color: #4caf50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 0px;
-    cursor: pointer;
-  }
+    .card-image figure {
+      width: 100%;
+      height: 60%;
+      object-fit: cover;
+    }
 
-  .card button:hover {
-    background-color: #45a049;
-  }
-</style>
+    .card-content {
+      padding: 2%;
+      height: calc(100% - 150px);
+    }
+
+    .card button {
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 18px;
+      margin: 4px 0px;
+      cursor: pointer;
+      float: right;
+    }
+
+    .card button:hover {
+      background-color: #45a049;
+    }
+    .content {
+      font-size: 20px;
+    }
+    .subtitle-is-6 {
+      font-size: 15px;
+    }
+  </style>
+</html>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/js/homepage.js"></script>

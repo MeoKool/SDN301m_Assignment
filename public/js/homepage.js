@@ -60,15 +60,30 @@ fetch("http://localhost:5000/v1/watch/getAllWatches")
     data.forEach((object) => {
       const card = document.createElement("div");
       card.classList.add("card");
+
       // Remove 'public\' from the image path
       const imagePath = object.image.replace("public\\", "");
+
       card.innerHTML = `
-      <h2>${object.watchName}</h2>
-      <img src="${imagePath}" alt="${object.watchName}">
-      <p>${object.price}</p>
-      <p>Brand: ${object.brand.brandName}</p>
-      <a href="/details/${object._id}"><button>Details</button></a>
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="${imagePath}" alt="${object.watchName}">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">${object.watchName}</p>
+              <p class="subtitle-is-6">Brand: ${object.brand.brandName}</p>
+            </div>
+          </div>
+          <div class="content">
+           Price: ${object.price}$
+            <a href="/details/${object._id}"><button>Details</button></a>
+          </div>
+        </div>
       `;
+
       const cardsContainer = document.getElementById("cardsContainer");
       cardsContainer.appendChild(card);
     });
