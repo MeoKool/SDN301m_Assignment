@@ -32,26 +32,6 @@ searchInput.addEventListener("keypress", function (e) {
   }
 });
 
-logoutButton.addEventListener("click", function () {
-  Swal.fire({
-    title: "Are you sure you want to logout?",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, logout!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "Logged out!",
-        icon: "success",
-      }).then(() => {
-        sessionStorage.clear();
-        location.reload();
-      });
-    }
-  });
-});
 // Fetch data from the API
 fetch("http://localhost:5000/v1/watch/getAllWatches")
   .then((response) => response.json())

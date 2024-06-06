@@ -5,8 +5,8 @@ function fetchWatchDetails(watchId) {
       const imagePath = "/" + data.image.replace("public\\", "");
       const watchDetails = document.getElementById("watchDetails");
       watchDetails.innerHTML = `
-   <h2>${data.watchName}</h2>
-   <img src="${imagePath}" alt="Watch Image">    
+   <img src="${imagePath}" alt="Watch Image"> 
+   <h2>Name: ${data.watchName}</h2>
    <h3>Price: ${data.price}</h3>
    <h3>Brand: ${data.brand.brandName}</h3>
    <h3>Description: ${data.watchDescription}</h3>      

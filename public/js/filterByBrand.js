@@ -20,13 +20,7 @@ searchInput.addEventListener("keypress", function (e) {
     }
   }
 });
-logoutButton.addEventListener("click", function () {
-  var confirmLogout = confirm("Are you sure you want to logout?");
-  if (confirmLogout) {
-    sessionStorage.clear();
-    location.reload();
-  }
-});
+
 function fetchFilterDetails(id) {
   fetch(`http://localhost:5000/v1/brand/getByIDBrands/${id}`)
     .then((response) => response.json())

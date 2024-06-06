@@ -69,7 +69,31 @@
         </div>
 
         <div class="navbar-end">
-          <div class="navbar-item">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <div>
+              <p
+                id="memberContainer"
+                style="display: none; font-size: 20px"
+              ></p>
+              <a href="/user" id="userProfile" style="display: none">
+                <button class="button is-primary">Profile</button>
+              </a>
+              <button
+                class="button is-light"
+                id="logoutButton"
+                style="display: none"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+          
             <div class="buttons">
               <a class="button is-primary" href="/register">
                 <strong>Sign up</strong>
@@ -81,4 +105,5 @@
       </div>
     </nav>
   </body>
+  <script src="/js/navbar.js"></script>
 </html>
