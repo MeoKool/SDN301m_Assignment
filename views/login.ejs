@@ -1,32 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Login</title>
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="cl-icon/css/all.min.css" />
   </head>
   <body>
-    <h1>Login</h1>
-    <form onsubmit="submitForm(event)">
-      <label for="membername">Member Name:</label>
-      <input
-        type="text"
-        id="memberName"
-        name="memberName"
-        required
-      /><br /><br />
+    <div class="wrapper">
+      <form class="form" onsubmit="submitForm(event)">
+        <h2 class="title">Login</h2>
+        <div class="inp">
+          <input
+            class="input"
+            type="text"
+            id="memberName"
+            name="memberName"
+            required
+            placeholder="Member Name"
+          />
+          <i class="fa-solid fa-user"></i>
+        </div>
 
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        required
-      /><br /><br />
-
-      <input type="submit" value="Login" />
-    </form>
-    <a href="/register">
-      <button>Register</button>
-    </a>
+        <div class="inp">
+          <input
+            class="input"
+            type="password"
+            id="password"
+            name="password"
+            required
+            placeholder="Password"
+          />
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <input class="submit" type="submit" value="Login" />
+        <p class="footer">
+          No have Member? <a href="/register" class="link"> Register Now</a>
+        </p>
+      </form>
+      <div></div>
+      <div class="banner">
+        <h1 class="wel_text">Watch Shop</h1>
+        <br />
+        <p class="para"></p>
+      </div>
+    </div>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="/js/login.js"></script>

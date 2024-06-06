@@ -7,6 +7,8 @@ var searchContainer = document.getElementById("searchContainer");
 var searchInput = document.getElementById("searchInput");
 var userProfile = document.getElementById("userProfile");
 var brandName = document.getElementById("brandName");
+var searchButton = document.querySelector(".button.is-info");
+
 if (memberName) {
   searchContainer.style.display = "inline-block";
   loginButton.style.display = "none";
@@ -17,6 +19,7 @@ if (memberName) {
   userProfile.style.display = "inline-block";
   brandName.style.display = "inline-block";
 } else {
+  searchButton.style.display = "none";
   logoutButton.style.display = "none";
   memberContainer.style.display = "none";
   brandName.style.display = "none";
@@ -25,13 +28,28 @@ searchInput.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     var searchParam = e.target.value;
     if (searchParam.trim() === "") {
-      alert("Please enter a search term.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter a search term.",
+      });
     } else {
       window.location.href = `/search/${searchParam}`;
     }
   }
 });
-
+searchButton.onclick = function () {
+  var searchParam = searchInput.value;
+  if (searchParam.trim() === "") {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please enter a search term.",
+    });
+  } else {
+    window.location.href = `/search/${searchParam}`;
+  }
+};
 // Fetch data from the API
 fetch("http://localhost:5000/v1/watch/getAllWatches")
   .then((response) => response.json())
