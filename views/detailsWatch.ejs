@@ -7,6 +7,15 @@
       href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
     />
     <style>
+      .card{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        margin: 20px auto 0 auto;
+      }
+      
       .popup-box {
         display: none;
         position: fixed;
@@ -25,68 +34,31 @@
         border: 1px solid #888;
         width: 80%;
       }
-    #cardsContainer {
-      display: flex;
-      flex-wrap: wrap;
-    }
 
-    .card {
-      flex: 0 0 23%;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      transition: 0.3s;
-      width: 24%;
-      margin: 1%;
-    }
 
-    .card:hover {
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    }
-
-    .container {
-      padding: 2px 16px;
-    }
-
-    .card-image figure {
-      width: 100%;
-      height: 60%;
+    .card-image {
+      width: 50%;
+      height: 40%;
       object-fit: cover;
     }
-
     .card-content {
-      padding: 2%;
-      height: calc(100% - 150px);
-    }
-
-    .card button {
-      background-color: #4caf50;
-      border: none;
-      color: white;
-      padding: 15px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 18px;
-      margin: 4px 0px;
-      cursor: pointer;
-      float: right;
-    }
-
-    .card button:hover {
-      background-color: #45a049;
     }
     .content {
-      font-size: 20px;
+      font-size: 18px;
     }
     .subtitle-is-6 {
-      font-size: 15px;
+      font-size: 20px;
     }
   </style>
   </head>
   <body>
     <%- include('navbar') %>
-    <div id="watchDetails"></div>
-    <button class="button is-warning" onclick="goBack()">Back</button>
-    <button class="button is-info" onclick="openPopup()">Feedback</button>
+    <div class="card" id="watchDetails"></div>
     <div id="popup" class="popup-box">
       <div class="popup-content">
         <span onclick="closePopup()" style="float:right;cursor:pointer">&times;</span>

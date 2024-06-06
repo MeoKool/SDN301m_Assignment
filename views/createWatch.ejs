@@ -2,6 +2,20 @@
 <html>
   <head>
     <title>Create Watch</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+    />
+    <style>
+       .card{
+        padding: 1%;
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        align-items: flex-start;
+        margin: 20px auto 0 auto;
+      }
+    </style>
   </head>
   <body>
     <%- include('navbar') %>
@@ -11,27 +25,57 @@
       method="POST"
       enctype="multipart/form-data"
     >
-      <label for="watchName">Watch Name:</label>
-      <input type="text" id="watchName" name="watchName" required />
+    <div class="card">
+      <label class="label" for="watchName">Watch Name:</label>
+      <input
+        class="input"
+        type="text"
+        id="watchName"
+        name="watchName"
+        required
+      />
 
-      <label for="image">Image:</label>
-      <input type="file" id="image" name="image" required />
-
-      <label for="price">Price:</label>
-      <input type="number" id="price" name="price" required />
-
-      <label for="Automatic">Automatic:</label>
-      <input type="checkbox" id="Automatic" name="Automatic" value="true" />
-      <label for="brand">Brand:</label>
-      <textarea id="brand" name="brand" required></textarea>
-      <label for="watchDescription">Watch Description:</label>
+      <label class="label" for="price">Price:</label>
+      <input class="input" type="number" id="price" name="price" required />
+      <label class="label" for="brand">Brand:</label>
+      <textarea class="input" id="brand" name="brand" required></textarea>
+      <label class="label" for="watchDescription">Watch Description:</label>
       <textarea
+        class="textarea"
         id="watchDescription"
         name="watchDescription"
         required
       ></textarea>
-
-      <button id="createWatchButton" type="submit">Create Watch</button>
+      <label class="label" for="image">Image:</label>
+      <div class="file has-name">
+          <label class="file-label">
+              <input class="file-input" type="file" id="image" name="image" required onchange="updateFileName()" />
+              <span class="file-cta">
+                  <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label"> Choose a file… </span>
+              </span>
+              <span class="file-name" id="fileName"> No file chosen </span>
+          </label>
+      </div>
+  <div>
+      <label class="checkbox" for="Automatic">Automatic:</label>
+      <input type="checkbox" id="Automatic" name="Automatic" value="true" />
+    </div class="control">
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-success" id="createWatchButton" type="submit">
+            Create Watch
+          </button>
+        </div>
+        <div class="control">
+          <button class="button is-link is-light" onclick="goBack()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
     </form>
     <script></script>
   </body>

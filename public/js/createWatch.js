@@ -38,3 +38,11 @@ document
         console.error("Error:", error);
       });
   });
+function goBack() {
+  window.history.back();
+}
+function updateFileName() {
+  var input = document.getElementById("image");
+  var fileName = document.getElementById("fileName");
+  fileName.textContent = input.files[0].name;
+}

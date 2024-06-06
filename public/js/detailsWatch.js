@@ -1,16 +1,34 @@
 function fetchWatchDetails(watchId) {
   fetch(`http://localhost:5000/v1/watch/getByIdWatches/${watchId}`)
     .then((response) => response.json())
-    .then((data) => {
-      const imagePath = "/" + data.image.replace("public\\", "");
+    .then((object) => {
+      const imagePath = "/" + object.image.replace("public\\", "");
       const watchDetails = document.getElementById("watchDetails");
       watchDetails.innerHTML = `
-   <img src="${imagePath}" alt="Watch Image"> 
-   <h2>Name: ${data.watchName}</h2>
-   <h3>Price: ${data.price}</h3>
-   <h3>Brand: ${data.brand.brandName}</h3>
-   <h3>Description: ${data.watchDescription}</h3>      
- `;
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="${imagePath}" alt="${object.watchName}">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">${object.watchName}</p>
+              <p class="subtitle-is-6">Brand: ${object.brand.brandName}</p>
+            </div>
+          </div>
+          <div class="content">
+           Price: ${object.price}$
+           <div class="content">
+          Description: ${object.watchDescription}
+          </div>
+          </div>
+        </div>
+        <div class="card-footer">
+    <button class="button is-info" onclick="openPopup()">Feedback</button>
+    <button class="button is-warning" onclick="goBack()">Back</button>
+    </div>  
+      `;
     })
     .catch((error) => {
       console.error("Error:", error);
