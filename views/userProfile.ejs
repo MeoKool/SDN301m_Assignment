@@ -1,18 +1,49 @@
-<div>
-  <h1>User Profile</h1>
-  <p>Name: <span id="name"></span></p>
-  <p>Year of Birth: <span id="yob"></span></p>
-  <button id="editButton" style="display: inline-block">Edit</button>
-  <button id="submitButton" style="display: none">Submit</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>User Profile</title>
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+/>
+<style>
+  .card{
+        padding: 1%;
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        align-items: flex-start;
+        margin: 20px auto 0 auto;
+      }
+</style>
+<body>
+  <%- include('navbar') %>
+  <div class="container is-fullhd">
+    <div class="card">
+  <h1 class="title">User Profile</h1>
+  <h2 class="subtitle">Name: <span id="name"></span></h2>
+  <h2 class="subtitle">Year of Birth: <span id="yob"></span></h2>
+  <div class="field is-grouped">
+  <button class="button is-warning" id="editButton" style="display: inline-block">Edit</button>
+  <button class="button is-success" id="submitButton" style="display: none">Submit</button>
   <button
+    class="button is-info"
     id="changePasswordButton"
     onclick="location.href='user/changePassword'"
     style="display: none"
   >
     Change Password
   </button>
-  <button id="cancelButton" style="display: none">Cancel</button>
-  <button id="backButton" onclick="goBack()">Back</button>
+  <button class="button is-danger" id="cancelButton" style="display: none">Cancel</button>
+  <button class="button is-danger" id="backButton" onclick="goBack()">Back</button>
 </div>
-
+</div>
+</div>
+</body>
+</html>
 <script src="/js/userProfile.js"></script>
