@@ -25,10 +25,17 @@ function fetchWatchDetails(watchId) {
           </div>
         </div>
         <div class="card-footer">
-    <button class="button is-info" onclick="openPopup()">Feedback</button>
+    <button id="feedbackButton" class="button is-info" style="display: none" onclick="openPopup()">Feedback</button>
     <button class="button is-warning" onclick="goBack()">Back</button>
     </div>  
       `;
+      var memberName = sessionStorage.getItem("memberName");
+      var feedbackButton = document.querySelector("#feedbackButton");
+      if (memberName) {
+        feedbackButton.style.display = "inline-block";
+      } else {
+        feedbackButton.style.display = "none";
+      }
     })
     .catch((error) => {
       console.error("Error:", error);

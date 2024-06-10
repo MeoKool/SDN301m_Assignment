@@ -1,4 +1,3 @@
-const memberName = sessionStorage.getItem("memberName");
 window.onload = function () {
   document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault();

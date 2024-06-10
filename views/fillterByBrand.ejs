@@ -67,26 +67,28 @@
   </style>
   <body>
     <%- include('navbar') %>
-    <div class="field is-grouped">
-      <div class="control" id="searchContainer" style="display: none">
-        <input
-          class="input"
-          type="text"
-          id="searchInput"
-          placeholder="Search watches..."
-        />
-      </div>
-      <p class="control">
-        <button class="button is-info">Search</button>
-      </p>
+    <div class="container">
+      <div class="field is-grouped">
+        <div class="control" id="searchContainer" style="display: none">
+          <input
+            class="input"
+            type="text"
+            id="searchInput"
+            placeholder="Search watches..."
+          />
+        </div>
+        <p class="control">
+          <button class="button is-info">Search</button>
+        </p>
 
-      <div class="select is-rounded">
-        <select id="brandName">
-          <option value="">Select a brand</option>
-        </select>
+        <div class="select is-rounded">
+          <select id="brandName">
+            <option value="">Select a brand</option>
+          </select>
+        </div>
       </div>
+      <div id="cardsContainer"></div>
     </div>
-    <div id="cardsContainer"></div>
   </body>
 </html>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

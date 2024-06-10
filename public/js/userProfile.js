@@ -1,5 +1,5 @@
 function goBack() {
-  window.history.back();
+  window.location.href = "/";
 }
 // Fetch API to get user information
 var dateData = "";
@@ -59,8 +59,14 @@ document.getElementById("submitButton").addEventListener("click", () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert("User information updated successfully");
-      location.reload();
+      Swal.fire({
+        icon: "success",
+        title: "User information updated successfully!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.reload();
+        }
+      });
     });
 });
 document.getElementById("cancelButton").addEventListener("click", () => {

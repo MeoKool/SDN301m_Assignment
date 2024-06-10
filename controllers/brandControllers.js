@@ -25,7 +25,12 @@ const brandController = {
   //getByIDBrands
   getByIDBrands: async (req, res) => {
     try {
-      const brand = await Brand.findById(req.params.id).populate("watches");
+      const brand = await Brand.findById(req.params.id).populate({
+        path: "watches",
+        populate: {
+          path: "brand",
+        },
+      });
       res.status(200).json(brand);
     } catch (error) {
       res.status(500).json({ message: error.message });

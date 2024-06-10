@@ -66,8 +66,9 @@ function fetchFilterDetails(id) {
           </div>
           <div class="content">
            Price: ${object.price}$
-            <a href="/details/${object._id}"><button>Details</button></a>
           </div>
+            <a href="/details/${object._id}"><button>Details</button></a>
+
         </div>
       `;
         cardContainer.appendChild(card);
@@ -79,7 +80,6 @@ function fetchFilterDetails(id) {
   fetch("http://localhost:5000/v1/brand/getAllBrands")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       const select = document.getElementById("brandName");
       data.forEach((brand) => {
         const option = document.createElement("option");

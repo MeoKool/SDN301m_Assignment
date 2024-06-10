@@ -25,25 +25,26 @@
   <%- include('navbar') %>
   <div class="container is-fullhd">
     <div class="card">
-  <h1 class="title">User Profile</h1>
-  <h2 class="subtitle">Name: <span id="name"></span></h2>
-  <h2 class="subtitle">Year of Birth: <span id="yob"></span></h2>
-  <div class="field is-grouped">
-  <button class="button is-warning" id="editButton" style="display: inline-block">Edit</button>
-  <button class="button is-success" id="submitButton" style="display: none">Submit</button>
-  <button
-    class="button is-info"
-    id="changePasswordButton"
-    onclick="location.href='user/changePassword'"
-    style="display: none"
-  >
-    Change Password
-  </button>
-  <button class="button is-danger" id="cancelButton" style="display: none">Cancel</button>
-  <button class="button is-danger" id="backButton" onclick="goBack()">Back</button>
-</div>
-</div>
-</div>
+      <h1 class="title">User Profile</h1>
+        <h2 class="subtitle">Name: <span id="name"></span></h2>
+        <h2 class="subtitle">Year of Birth: <span id="yob"></span></h2>
+    <div class="field is-grouped">
+      <button class="button is-warning" id="editButton" style="display: inline-block">Edit</button>
+      <button class="button is-success" id="submitButton" style="display: none">Submit</button>
+      <button
+        class="button is-info"
+        id="changePasswordButton"
+        onclick="location.href='user/changePassword'"
+        style="display: none"
+       >
+      Change Password
+     </button>
+      <button class="button is-danger" id="cancelButton" style="display: none">Cancel</button>
+      <button class="button is-danger" id="backButton" onclick="goBack()">Back</button>
+    </div>
+    </div>
+  </div>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/js/userProfile.js"></script>
