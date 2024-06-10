@@ -56,7 +56,7 @@ function fetchWatchDetails(watchId) {
                   .map(
                     (comment) => `
                     <tr>
-                        <td>${comment.rating}</td>
+                        <td>${comment.rating}⭐</td>
                         <td>${comment.content}</td>
                         <td>${comment.author.name}</td>
                         <td>${new Date(comment.createdAt).toLocaleString()}</td>

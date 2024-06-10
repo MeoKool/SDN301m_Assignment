@@ -32,7 +32,7 @@
         margin: 15% auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 80%;
+        width: 50%;
       }
 
 
@@ -58,6 +58,51 @@
     .card-footer{
       margin-bottom: 20px;
     }
+    /* Định dạng cho form feedback */
+#feedbackForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Định dạng cho các nhãn và input radio */
+.rate {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.rate input[type="radio"] {
+  display: none;
+}
+
+.rate label {
+  font-size: 18px;
+  color: #ddd;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: color 0.3s;
+}
+
+.rate input[type="radio"]:checked ~ label,
+.rate label:hover,
+.rate label:hover ~ label {
+  color: #f39c12;
+  font-weight: bold;
+}
+
+/* Định dạng cho textarea */
+textarea#feedback {
+  width: 80%;
+  max-width: 600px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  resize: vertical;
+}
+
   </style>
   </head>
   <body>
@@ -70,21 +115,21 @@
     <div id="popup" class="popup-box">
       <div class="popup-content">
         <span onclick="closePopup()" style="float:right;cursor:pointer">&times;</span>
-        <h2>Rate and Comment</h2>
+        <h2 class="title">Rate and Comment</h2>
         <form id="feedbackForm">
-          <div class="rate">
+          <div class="rate" required>
             <input type="radio" id="star5" name="rate" value="5" />
-            <label for="star5" title="text">5 stars</label>
+            <label for="star5" title="text">5 ⭐ </label>
             <input type="radio" id="star4" name="rate" value="4" />
-            <label for="star4" title="text">4 stars</label>
+            <label for="star4" title="text">4 ⭐</label>
             <input type="radio" id="star3" name="rate" value="3" />
-            <label for="star3" title="text">3 stars</label>
+            <label for="star3" title="text">3 ⭐</label>
             <input type="radio" id="star2" name="rate" value="2" />
-            <label for="star2" title="text">2 stars</label>
+            <label for="star2" title="text">2 ⭐</label>
             <input type="radio" id="star1" name="rate" value="1" />
-            <label for="star1" title="text">1 star</label>
+            <label for="star1" title="text">1 ⭐</label>
           </div>
-          <textarea id="feedback" name="feedback" rows="4" cols="50" placeholder="Enter your feedback here..."></textarea>
+          <textarea required id="feedback" name="feedback" rows="4" cols="50" placeholder="Enter your feedback here..."></textarea>
           <button class="button is-success" type="button" onclick="submitFeedback(watchId)">Submit</button>
         </form>
         </div>
