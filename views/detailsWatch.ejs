@@ -12,7 +12,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 50%;
+        width: 70%;
         margin: 20px auto 0 auto;
       }
       
@@ -49,10 +49,14 @@
       text-align: center;
     }
     .content {
+      padding: auto;
       font-size: 18px;
     }
     .subtitle-is-6 {
       font-size: 20px;
+    }
+    .card-footer{
+      margin-bottom: 20px;
     }
   </style>
   </head>
@@ -60,6 +64,9 @@
     <%- include('navbar') %>
     <div class="container">
     <div class="card" id="watchDetails"></div>
+    <div id="commentSection" class="card">
+        <div id="comments" style="display: none;"></div>
+      </div>
     <div id="popup" class="popup-box">
       <div class="popup-content">
         <span onclick="closePopup()" style="float:right;cursor:pointer">&times;</span>
@@ -82,7 +89,6 @@
         </form>
         </div>
       </div>
-    </div>
   </div>
   </body>
 </html>

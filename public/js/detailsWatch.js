@@ -2,6 +2,7 @@ function fetchWatchDetails(watchId) {
   fetch(`http://localhost:5000/v1/watch/getByIdWatches/${watchId}`)
     .then((response) => response.json())
     .then((object) => {
+      console.log(object);
       const imagePath = "/" + object.image.replace("public\\", "");
       const watchDetails = document.getElementById("watchDetails");
       watchDetails.innerHTML = `
@@ -29,6 +30,7 @@ function fetchWatchDetails(watchId) {
     <button class="button is-warning" onclick="goBack()">Back</button>
     </div>  
       `;
+
       var memberName = sessionStorage.getItem("memberName");
       var feedbackButton = document.querySelector("#feedbackButton");
       if (memberName) {
@@ -36,11 +38,42 @@ function fetchWatchDetails(watchId) {
       } else {
         feedbackButton.style.display = "none";
       }
+      if (object.comments.length >= 1) {
+        const Comment = document.getElementById("comments");
+        Comment.style.display = "inline-block";
+        Comment.innerHTML = `
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Rating</th>
+                    <th>Content</th>
+                    <th>Author</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${object.comments
+                  .map(
+                    (comment) => `
+                    <tr>
+                        <td>${comment.rating}</td>
+                        <td>${comment.content}</td>
+                        <td>${comment.author.name}</td>
+                        <td>${new Date(comment.createdAt).toLocaleString()}</td>
+                    </tr>
+                `
+                  )
+                  .join("")}
+            </tbody>
+        </table>
+        `;
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
+
 function goBack() {
   window.history.back();
 }
@@ -69,9 +102,20 @@ function submitFeedback(watchId) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Success:", data);
+      Swal.fire({
+        icon: "success",
+        title: "Thanks for your feedback!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.reload();
+        }
+      });
     })
     .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "You can only feedback once time!",
+      });
       console.error("Error:", error);
     });
   document.getElementById("popup").style.display = "none";

@@ -30,7 +30,7 @@ logoutButton.addEventListener("click", function () {
         icon: "success",
       }).then(() => {
         sessionStorage.clear();
-        location.reload();
+        window.location.href = "/";
       });
     }
   });

@@ -53,7 +53,11 @@ const watchesControllers = {
   //getByIDWatches
   getByIdWatches: async (req, res) => {
     try {
-      const watch = await Watches.findById(req.params.id).populate("brand");
+      const watch = await Watches.findById(req.params.id).populate([
+        "brand",
+        { path: "comments.author" },
+      ]);
+
       if (!watch) {
         return res.status(404).json({ message: "Watch not found" });
       }
