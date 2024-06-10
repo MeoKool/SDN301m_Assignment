@@ -3,82 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Watch</title>
   </head>
   <style>
     #cardsContainer {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around;
+    }
+    .field.is-grouped {
+      margin: 1%;
     }
     .card {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 15px;
-      margin: 15px;
-      transition: box-shadow 0.3s;
-      width: 500px;
-      height: 500px;
+      flex: 0 0 23%;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      width: 24%;
+      margin: 1%;
     }
 
     .card:hover {
-      box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
 
-    .card img {
+    .container {
+      padding: 2px 16px;
+    }
+
+    .card-image figure {
       width: 100%;
-      height: 65%;
+      height: 60%;
+      object-fit: cover;
     }
 
-    .card h2 {
-      margin-top: 0;
+    .card-content {
+      padding: 2%;
     }
 
     .card button {
-      background-color: #4caf50; /* Green */
+      background-color: #4caf50;
       border: none;
       color: white;
       padding: 15px 32px;
       text-align: center;
       text-decoration: none;
       display: inline-block;
-      font-size: 16px;
+      font-size: 18px;
       margin: 4px 0px;
       cursor: pointer;
+      float: right;
+      border-radius: 999px;
+      margin-bottom: 10px;
     }
 
     .card button:hover {
       background-color: #45a049;
     }
+    .content {
+      font-size: 20px;
+    }
+    .subtitle-is-6 {
+      font-size: 15px;
+    }
   </style>
   <body>
     <%- include('navbar') %>
-    <div
-      style="display: flex; justify-content: space-between; align-items: center"
-    >
-      <h1>WATCHES SHOP</h1>
-      <div>
-        <p id="memberContainer"></p>
 
-        <a href="/user" id="userProfile">
-          <button>Profile</button>
-        </a>
-        <a href="/" id="logoutButton" style="display: none">
-          <button>Logout</button>
-        </a>
+    <div class="field is-grouped">
+      <div class="control" id="searchContainer" style="display: none">
+        <input
+          class="input"
+          type="text"
+          id="searchInput"
+          placeholder="Search watches..."
+        />
+      </div>
+      <p class="control">
+        <button class="button is-info">Search</button>
+      </p>
+      <div class="select is-rounded">
+        <select id="brandName">
+          <option value="">Select a brand</option>
+        </select>
       </div>
     </div>
-    <div id="searchContainer" style="display: none">
-      <input type="text" id="searchInput" placeholder="Search watches..." />
-    </div>
-    <select id="brandName">
-      <option value="">Select a brand</option>
-    </select>
+
     <div id="cardsContainer"></div>
   </body>
 </html>
 <script src="/js/searchWatch.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   const name = "<%= name %>";
   searchWatchByName(name);

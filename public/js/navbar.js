@@ -8,7 +8,7 @@ if (memberName) {
   loginButton.style.display = "none";
   registerButton.style.display = "none";
   logoutButton.style.display = "inline-block";
-  memberContainer.innerHTML = `<h2>Welcome ${memberName}</h2>`;
+  memberContainer.innerHTML = `Welcome, ${memberName}`;
   memberContainer.style.display = "inline-block";
   userProfile.style.display = "inline-block";
 } else {

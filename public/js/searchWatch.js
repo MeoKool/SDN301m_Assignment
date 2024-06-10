@@ -3,6 +3,7 @@ var memberContainer = document.getElementById("memberContainer");
 var logoutButton = document.getElementById("logoutButton");
 var searchContainer = document.getElementById("searchContainer");
 var searchInput = document.getElementById("searchInput");
+var searchButton = document.querySelector(".button.is-info");
 
 if (memberName) {
   searchContainer.style.display = "inline-block";
@@ -14,12 +15,28 @@ searchInput.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     var searchParam = e.target.value;
     if (searchParam.trim() === "") {
-      alert("Please enter a search term.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter a search term.",
+      });
     } else {
       window.location.href = `/search/${searchParam}`;
     }
   }
 });
+searchButton.onclick = function () {
+  var searchParam = searchInput.value;
+  if (searchParam.trim() === "") {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please enter a search term.",
+    });
+  } else {
+    window.location.href = `/search/${searchParam}`;
+  }
+};
 logoutButton.addEventListener("click", function () {
   var confirmLogout = confirm("Are you sure you want to logout?");
   if (confirmLogout) {
@@ -41,12 +58,24 @@ function searchWatchByName(name) {
         // Remove 'public\' from the image path
         const imagePath = "/" + object.image.replace("public\\", "");
         card.innerHTML = `
-        <h2>${object.watchName}</h2>
-        <img src="${imagePath}" alt="${object.watchName}">
-        <p>${object.price}</p>
-        <p>Brand: ${object.brand.brandName}</p>
-        <a href="/details/${object._id}"><button>Details</button></a>
-        `;
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="${imagePath}" alt="${object.watchName}">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">${object.watchName}</p>
+              <p class="subtitle-is-6">Brand: ${object.brand.brandName}</p>
+            </div>
+          </div>
+          <div class="content">
+           Price: ${object.price}$
+            <a href="/details/${object._id}"><button>Details</button></a>
+          </div>
+        </div>
+      `;
         cardContainer.appendChild(card);
       });
     })
