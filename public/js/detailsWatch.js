@@ -33,6 +33,7 @@ function fetchWatchDetails(watchId) {
 
       var memberName = sessionStorage.getItem("memberName");
       var feedbackButton = document.querySelector("#feedbackButton");
+      var idMember = sessionStorage.getItem("id");
       if (memberName) {
         feedbackButton.style.display = "inline-block";
       } else {
@@ -60,6 +61,25 @@ function fetchWatchDetails(watchId) {
                         <td>${comment.content}</td>
                         <td>${comment.author.name}</td>
                         <td>${new Date(comment.createdAt).toLocaleString()}</td>
+                        ${
+                          comment.author._id === idMember
+                            ? `<td>
+                <div class="dropdown is-hoverable">
+                  <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                      <span>Option</span>
+                    </button>
+                    <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                      <div class="dropdown-content">
+                            <button class="button is-warning" onClick="editFunction('${watchId}', '${comment._id}')">Edit</button>
+                            <button class="button is-danger" onClick="deleteFeedback('${watchId}', '${comment._id}')">Delete</button>
+                      </div>
+                      </div>
+                    </div>
+                </div>
+                </td>`
+                            : ""
+                        }
                     </tr>
                 `
                   )
@@ -115,6 +135,102 @@ function submitFeedback(watchId) {
       Swal.fire({
         icon: "error",
         title: "You can only feedback once time!",
+      });
+      console.error("Error:", error);
+    });
+  document.getElementById("popup").style.display = "none";
+}
+function deleteFeedback(watchID, commentID) {
+  Swal.fire({
+    title: "Are you sure?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(
+        `http://localhost:5000/v1/feedback/${watchID}/comments/${commentID}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((response) => {
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Comment deleted successfully!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload();
+            }
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error deleting feedback!",
+          });
+        }
+      });
+    }
+  });
+}
+
+function editFunction(watchId, commentId) {
+  fetch(`http://localhost:5000/v1/feedback/${watchId}/comments/${commentId}`)
+    .then((response) => response.json())
+    .then((comment) => {
+      document.getElementById("popup").style.display = "block";
+
+      document.querySelector(
+        'input[name="rate"][value="' + comment.rating + '"]'
+      ).checked = true;
+      document.getElementById("feedback").value = comment.content;
+      document
+        .querySelector("#feedbackForm button")
+        .setAttribute(
+          "onclick",
+          `updateFeedback('${watchId}', '${commentId}')`
+        );
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+function updateFeedback(watchId, commentId) {
+  const rate = document.querySelector('input[name="rate"]:checked').value;
+  const feedback = document.getElementById("feedback").value;
+  const IdMember = sessionStorage.getItem("id");
+  const data = {
+    rating: rate,
+    content: feedback,
+    author: IdMember,
+  };
+  fetch(`http://localhost:5000/v1/feedback/${watchId}/comments/${commentId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      Swal.fire({
+        icon: "success",
+        title: "Comment updated successfully!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.reload();
+        }
+      });
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Error updating feedback!",
       });
       console.error("Error:", error);
     });
