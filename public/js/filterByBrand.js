@@ -4,6 +4,7 @@ var logoutButton = document.getElementById("logoutButton");
 var searchContainer = document.getElementById("searchContainer");
 var searchInput = document.getElementById("searchInput");
 var searchButton = document.querySelector(".button.is-info");
+let accessToken = sessionStorage.getItem("accessToken");
 
 if (memberName) {
   searchContainer.style.display = "inline-block";
@@ -39,7 +40,13 @@ searchButton.onclick = function () {
 };
 
 function fetchFilterDetails(id) {
-  fetch(`http://localhost:5000/v1/brand/getByIDBrands/${id}`)
+  fetch(`http://localhost:5000/v1/brand/getByIDBrands/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      token: "Bearer " + accessToken,
+    },
+  })
     .then((response) => response.json())
     .then((data) => {
       console.log(data); // Add this line to log the data

@@ -1,3 +1,4 @@
+let accessToken = sessionStorage.getItem("accessToken");
 function fetchWatchDetails(watchId) {
   fetch(`http://localhost:5000/v1/watch/getByIdWatches/${watchId}`)
     .then((response) => response.json())
@@ -117,24 +118,26 @@ function submitFeedback(watchId) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      token: "Bearer " + accessToken,
     },
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      Swal.fire({
-        icon: "success",
-        title: "Thanks for your feedback!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          location.reload();
-        }
-      });
+    .then((response) => {
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Feedback submitted successfully!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            location.reload();
+          }
+        });
+      }
     })
     .catch((error) => {
       Swal.fire({
         icon: "error",
-        title: "You can only feedback once time!",
+        title: "You can only submit feedback once!",
       });
       console.error("Error:", error);
     });
@@ -156,6 +159,7 @@ function deleteFeedback(watchID, commentID) {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            token: "Bearer " + accessToken,
           },
         }
       ).then((response) => {
@@ -168,10 +172,20 @@ function deleteFeedback(watchID, commentID) {
               location.reload();
             }
           });
+        } else if (response.status === 401) {
+          Swal.fire({
+            icon: "error",
+            title:
+              "Unauthorized! You do not have permission to perform this action.",
+          });
         } else {
           Swal.fire({
             icon: "error",
             title: "Error deleting feedback!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload();
+            }
           });
         }
       });
@@ -180,7 +194,13 @@ function deleteFeedback(watchID, commentID) {
 }
 
 function editFunction(watchId, commentId) {
-  fetch(`http://localhost:5000/v1/feedback/${watchId}/comments/${commentId}`)
+  fetch(`http://localhost:5000/v1/feedback/${watchId}/comments/${commentId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      token: "Bearer " + accessToken,
+    },
+  })
     .then((response) => response.json())
     .then((comment) => {
       document.getElementById("popup").style.display = "block";
@@ -213,24 +233,26 @@ function updateFeedback(watchId, commentId) {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      token: "Bearer " + accessToken,
     },
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      Swal.fire({
-        icon: "success",
-        title: "Comment updated successfully!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          location.reload();
-        }
-      });
+    .then((response) => {
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Comment updated successfully!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            location.reload();
+          }
+        });
+      }
     })
     .catch((error) => {
       Swal.fire({
         icon: "error",
-        title: "Error updating feedback!",
+        title: "Error updating comment!",
       });
       console.error("Error:", error);
     });

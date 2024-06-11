@@ -4,6 +4,7 @@ var logoutButton = document.getElementById("logoutButton");
 var searchContainer = document.getElementById("searchContainer");
 var searchInput = document.getElementById("searchInput");
 var searchButton = document.querySelector(".button.is-info");
+let accessToken = sessionStorage.getItem("accessToken");
 
 if (memberName) {
   searchContainer.style.display = "inline-block";
@@ -46,12 +47,21 @@ logoutButton.addEventListener("click", function () {
 });
 
 function searchWatchByName(name) {
-  fetch(`http://localhost:5000/v1/watch/searchWatches/${name}`)
+  fetch(`http://localhost:5000/v1/watch/searchWatches/${name}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      token: "Bearer " + accessToken,
+    },
+  })
     .then((response) => response.json())
     .then((data) => {
       // Clear the current cards
       const cardContainer = document.getElementById("cardsContainer");
       cardContainer.innerHTML = "";
+      if (!Array.isArray(data)) {
+        data = [];
+      }
       data.forEach((object) => {
         const card = document.createElement("div");
         card.classList.add("card");

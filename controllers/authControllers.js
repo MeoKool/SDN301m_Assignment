@@ -47,6 +47,7 @@ const authControllers = {
           {
             id: member.id,
             admin: member.isAdmin,
+            name: member.name,
           },
           "12022002",
           { expiresIn: "1h" }

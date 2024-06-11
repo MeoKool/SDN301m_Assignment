@@ -14,18 +14,29 @@ const middleWareControllers = {
         next();
       });
     } else {
-      return res.status(403).json("You are not authenticated!");
+      return res.status(401).json("You are not authenticated!");
     }
   },
 
   //Verify Admin
   verifyAdmin: (req, res, next) => {
     middleWareControllers.verifyToken(req, res, () => {
-      if (req.member.id == req.params.id || req.member.isAdmin) {
+      if (req.member.id == req.params.id || req.member.admin) {
         next();
         return;
       } else {
-        return res.status(403).json("You are not authorized!");
+        return res.status(401).json("You are not authorized!");
+      }
+    });
+  },
+  //Verify Member
+  verifyMember: (req, res, next) => {
+    middleWareControllers.verifyToken(req, res, () => {
+      if (req.member.id == req.params.id || req.member.admin != true) {
+        next();
+        return;
+      } else {
+        return res.status(401).json("You are not authorized!");
       }
     });
   },

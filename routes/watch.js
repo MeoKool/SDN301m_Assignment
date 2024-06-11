@@ -1,3 +1,4 @@
+const middleWareControllers = require("../controllers/middleWareControllers");
 const watchesControllers = require("../controllers/watchControllers");
 const router = require("express").Router();
 const multer = require("multer");
@@ -17,9 +18,14 @@ router.get("/getAllWatches", watchesControllers.getAllWatches);
 router.get("/getWatchByName/:name", watchesControllers.getWatchByName);
 router.post(
   "/createWatch",
+  middleWareControllers.verifyToken,
   upload.single("image"),
   watchesControllers.createWatch
 );
 router.get("/getByIdWatches/:id/", watchesControllers.getByIdWatches);
-router.get("/searchWatches/:name", watchesControllers.searchWatches);
+router.get(
+  "/searchWatches/:name",
+  middleWareControllers.verifyToken,
+  watchesControllers.searchWatches
+);
 module.exports = router;

@@ -5,9 +5,13 @@ document
 
     var form = document.getElementById("createWatchForm");
     var formData = new FormData(form);
-
+    let accessToken = sessionStorage.getItem("accessToken");
+    console.log(accessToken);
     fetch(form.action, {
       method: "POST",
+      headers: {
+        token: "Bearer " + accessToken,
+      },
       body: formData,
     })
       .then((response) => {

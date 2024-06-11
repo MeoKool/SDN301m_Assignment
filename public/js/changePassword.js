@@ -5,7 +5,7 @@ window.onload = function () {
     const currentPassword = document.getElementById("currentPassword").value;
     const newPassword = document.getElementById("newPassword").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
-
+    let accessToken = sessionStorage.getItem("accessToken");
     if (newPassword !== confirmPassword) {
       Swal.fire({
         icon: "error",
@@ -19,6 +19,7 @@ window.onload = function () {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        token: "Bearer " + accessToken,
       },
       body: JSON.stringify({
         oldPassword: currentPassword,

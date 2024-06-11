@@ -3,7 +3,14 @@ function goBack() {
 }
 // Fetch API to get user information
 var dateData = "";
-fetch(`http://localhost:5000/v1/auth/getByMemberName/${memberName}`)
+let accessToken = sessionStorage.getItem("accessToken");
+fetch(`http://localhost:5000/v1/auth/getByMemberName/${memberName}`, {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    token: "Bearer " + accessToken,
+  },
+})
   .then((response) => response.json())
   .then((data) => {
     let date = new Date(data.yob);
@@ -51,6 +58,7 @@ document.getElementById("submitButton").addEventListener("click", () => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      token: "Bearer " + accessToken,
     },
     body: JSON.stringify({
       name: name,
