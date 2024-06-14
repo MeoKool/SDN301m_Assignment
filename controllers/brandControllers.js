@@ -36,6 +36,15 @@ const brandController = {
       res.status(500).json({ message: error.message });
     }
   },
+  //deleteBrand
+  deleteBrand: async (req, res) => {
+    try {
+      const brand = await Brand.findByIdAndDelete(req.params.id);
+      res.status(200).json({ message: "Brand deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = brandController;

@@ -18,7 +18,7 @@ router.get("/getAllWatches", watchesControllers.getAllWatches);
 router.get("/getWatchByName/:name", watchesControllers.getWatchByName);
 router.post(
   "/createWatch",
-  middleWareControllers.verifyToken,
+  middleWareControllers.verifyAdmin,
   upload.single("image"),
   watchesControllers.createWatch
 );

@@ -4,7 +4,7 @@ const router = require("express").Router();
 
 router.post(
   "/createBrand",
-  middleWareControllers.verifyToken,
+  middleWareControllers.verifyAdmin,
   brandControllers.createBrand
 );
 router.get("/getAllBrands", brandControllers.getAllBrands);
@@ -12,5 +12,10 @@ router.get(
   "/getByIDBrands/:id",
   middleWareControllers.verifyToken,
   brandControllers.getByIDBrands
+);
+router.get(
+  "/deleteBrand/:id",
+  middleWareControllers.verifyAdmin,
+  brandControllers.deleteBrand
 );
 module.exports = router;

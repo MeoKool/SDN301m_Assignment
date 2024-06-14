@@ -1,3 +1,16 @@
+var select = document.getElementById("brand");
+fetch("http://localhost:5000/v1/brand/getAllBrands")
+  .then((response) => response.json())
+  .then((data) => {
+    // Loop through the data and create option elements
+    for (var i = 0; i < data.length; i++) {
+      var option = document.createElement("option");
+      option.value = data[i]._id;
+      option.text = data[i].brandName;
+      select.appendChild(option);
+    }
+  })
+  .catch((error) => console.error("Error:", error));
 document
   .getElementById("createWatchButton")
   .addEventListener("click", function (event) {

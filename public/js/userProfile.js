@@ -53,7 +53,15 @@ document.getElementById("editButton").addEventListener("click", () => {
 document.getElementById("submitButton").addEventListener("click", () => {
   var name = document.getElementById("nameInput").value;
   var yob = document.getElementById("yobInput").value;
+  var dateOfBirth = new Date(yob);
+  var formattedDate =
+    ("0" + dateOfBirth.getDate()).slice(-2) +
+    "-" +
+    ("0" + (dateOfBirth.getMonth() + 1)).slice(-2) +
+    "-" +
+    dateOfBirth.getFullYear();
 
+  console.log(name, formattedDate);
   fetch(`http://localhost:5000/v1/auth/updateMember/${memberName}`, {
     method: "PUT",
     headers: {
@@ -62,18 +70,31 @@ document.getElementById("submitButton").addEventListener("click", () => {
     },
     body: JSON.stringify({
       name: name,
-      yob: yob,
+      yob: formattedDate,
     }),
   })
-    .then((response) => response.json())
-    .then((data) => {
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json().then((data) => {
+          Swal.fire({
+            icon: "success",
+            title: "User information updated successfully!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload();
+            }
+          });
+        });
+      } else {
+        throw new Error("Failed to update user information");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
       Swal.fire({
-        icon: "success",
-        title: "User information updated successfully!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          location.reload();
-        }
+        icon: "error",
+        title: "Failed to update user information",
+        text: error.toString(),
       });
     });
 });

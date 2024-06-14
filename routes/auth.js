@@ -2,11 +2,7 @@ const authControllers = require("../Controllers/authControllers");
 const middleWareControllers = require("../controllers/middleWareControllers");
 const router = require("express").Router();
 
-router.post(
-  "/createUser",
-  middleWareControllers.verifyAdmin,
-  authControllers.createUser
-);
+router.post("/createUser", authControllers.createUser);
 router.post("/Login", authControllers.loginMember);
 router.post(
   "/changePassword",
