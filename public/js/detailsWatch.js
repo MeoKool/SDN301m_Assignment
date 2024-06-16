@@ -132,14 +132,19 @@ function submitFeedback(watchId) {
             location.reload();
           }
         });
+      } else if (response.status === 400) {
+        Swal.fire({
+          icon: "error",
+          title: "Opps",
+          text: "You can only comment once time",
+        });
       }
     })
     .catch((error) => {
       Swal.fire({
         icon: "error",
-        title: "You can only submit feedback once!",
+        title: "Error submitting feedback!",
       });
-      console.error("Error:", error);
     });
   document.getElementById("popup").style.display = "none";
 }

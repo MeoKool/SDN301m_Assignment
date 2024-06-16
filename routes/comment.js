@@ -13,12 +13,12 @@ router.get("/:watchId/comments", commentController.getAllComments);
 router.get("/:watchId/comments/:commentId", commentController.getByIDComments);
 router.put(
   "/:watchId/comments/:commentId",
-  middleWareControllers.verifyToken,
+  middleWareControllers.verifyMember,
   commentController.updateComment
 );
 router.delete(
   "/:watchId/comments/:commentId",
-  middleWareControllers.verifyToken,
+  middleWareControllers.verifyMember,
   commentController.deleteComment
 );
 
