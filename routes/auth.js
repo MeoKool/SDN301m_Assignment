@@ -20,4 +20,8 @@ router.get(
   middleWareControllers.verifyAdmin,
   authControllers.getAllMembers
 );
+router.post("/Logout", authControllers.logoutMember);
+
+router.post("/refresh", authControllers.refreshToken);
+
 module.exports = router;

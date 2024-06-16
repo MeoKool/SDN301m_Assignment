@@ -25,13 +25,35 @@ logoutButton.addEventListener("click", function () {
     confirmButtonText: "Yes, logout!",
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire({
-        title: "Logged out!",
-        icon: "success",
-      }).then(() => {
-        sessionStorage.clear();
-        window.location.href = "/";
-      });
+      fetch("http://localhost:5000/v1/auth/logout", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Logout failed");
+        })
+        .then(() => {
+          Swal.fire({
+            title: "Logged out!",
+            icon: "success",
+          }).then(() => {
+            sessionStorage.clear();
+            window.location.href = "/";
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: "Error!",
+            text: "Logout failed. Please try again.",
+            icon: "error",
+          });
+        });
     }
   });
 });

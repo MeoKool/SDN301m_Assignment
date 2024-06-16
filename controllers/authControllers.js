@@ -28,6 +28,29 @@ const authControllers = {
       res.status(500).json({ message: error.message });
     }
   },
+  //Generate new access token
+  generateAccessToken: (user) => {
+    return jwt.sign(
+      {
+        id: user.id,
+        admin: user.isAdmin,
+        name: user.name,
+      },
+      "12022002",
+      { expiresIn: "1h" }
+    );
+  },
+  generateRefreshToken: (user) => {
+    return jwt.sign(
+      {
+        id: user.id,
+        admin: user.isAdmin,
+        name: user.name,
+      },
+      "12022002Q",
+      { expiresIn: "365d" }
+    );
+  },
   //Login member
   loginMember: async (req, res) => {
     try {
@@ -43,15 +66,13 @@ const authControllers = {
         return res.status(404).json({ message: "Wrong password!!!!" });
       }
       if (member && validPassword) {
-        const accessToken = jwt.sign(
-          {
-            id: member.id,
-            admin: member.isAdmin,
-            name: member.name,
-          },
-          "12022002",
-          { expiresIn: "1h" }
-        );
+        const accessToken = authControllers.generateAccessToken(member);
+        const refreshToken = authControllers.generateRefreshToken(member);
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          secure: false,
+          sameSite: "strict",
+        });
         res.status(200).json({
           id: member._id,
           accessToken,
@@ -62,6 +83,29 @@ const authControllers = {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+  },
+  //Refresh token
+  refreshToken: async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+      return res.status(403).json({ message: "Member not authenticated" });
+    }
+    if (!refreshTokens.includes(refreshToken)) {
+      return res.status(403).json({ message: "Refresh token not valid" });
+    }
+    jwt.verify(refreshToken, "12022002Q", (err, user) => {
+      if (err) {
+        return res.status(403).json({ message: "Refresh token not valid" });
+      }
+      const accessToken = authControllers.generateAccessToken(user);
+      const refreshToken = authControllers.generateRefreshToken(user);
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "strict",
+      });
+      res.status(200).json({ accessToken: accessToken });
+    });
   },
   // Change password
   changePassword: async (req, res) => {
@@ -86,8 +130,8 @@ const authControllers = {
   },
   //logout member
   logoutMember: async (req, res) => {
-    const refreshToken = req.body.token;
-    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+    // Assuming the names of the cookies are 'id', 'accessToken', 'name', and 'memberName'
+    res.clearCookie("refreshToken");
     res.status(200).json({ message: "Logout successful" });
   },
   // update member
@@ -131,6 +175,7 @@ const authControllers = {
       res.status(500).json({ message: error.message });
     }
   },
+  //Logout member
 };
 
 module.exports = authControllers;
