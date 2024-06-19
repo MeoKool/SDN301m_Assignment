@@ -69,7 +69,6 @@ const authControllers = {
         const accessToken = authControllers.generateAccessToken(member);
         const refreshToken = authControllers.generateRefreshToken(member);
         res.cookie("refreshToken", refreshToken, {
-          httpOnly: true,
           secure: false,
           sameSite: "strict",
         });
