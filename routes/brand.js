@@ -1,10 +1,12 @@
 const brandControllers = require("../controllers/brandControllers");
 const middleWareControllers = require("../controllers/middleWareControllers");
+const middleWareValidation = require("../controllers/middleWareValidation");
 const router = require("express").Router();
 
 router.post(
   "/createBrand",
   middleWareControllers.verifyAdmin,
+  middleWareValidation.validateCreateBrand,
   brandControllers.createBrand
 );
 router.get("/getAllBrands", brandControllers.getAllBrands);
@@ -13,7 +15,7 @@ router.get(
   middleWareControllers.verifyToken,
   brandControllers.getByIDBrands
 );
-router.get(
+router.delete(
   "/deleteBrand/:id",
   middleWareControllers.verifyAdmin,
   brandControllers.deleteBrand

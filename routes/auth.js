@@ -26,7 +26,12 @@ router.put(
   middleValidation.validateUpdateMember,
   authControllers.updateMember
 );
-router.get("/getByMemberName/:memberName", authControllers.getByMemberName);
+router.get(
+  "/getByMemberName/:memberName",
+  middleWareControllers.verifyToken,
+  middleValidation.validateGetByMemberName,
+  authControllers.getByMemberName
+);
 router.get(
   "/getAllMembers",
   middleWareControllers.verifyAdmin,
@@ -36,4 +41,9 @@ router.post("/Logout", authControllers.logoutMember);
 
 router.post("/refresh", authControllers.refreshToken);
 
+router.delete(
+  "/deleteMember/:memberName",
+  middleWareControllers.verifyAdmin,
+  authControllers.deleteMember
+);
 module.exports = router;

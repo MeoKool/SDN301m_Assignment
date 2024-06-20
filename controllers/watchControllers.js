@@ -1,6 +1,6 @@
 const Brands = require("../models/Brands");
 const Watches = require("../models/Watches");
-
+const mongoose = require("mongoose");
 const watchesControllers = {
   //getAllWatches
   getAllWatches: async (req, res) => {
@@ -36,13 +36,18 @@ const watchesControllers = {
       watchDescription: req.body.watchDescription,
       brand: req.body.brand,
     });
+
     if (req.body.brand) {
+      if (!mongoose.Types.ObjectId.isValid(req.body.brand)) {
+        return res.status(400).json({ message: "Invalid brandId" });
+      }
       const brand = await Brands.findById(req.body.brand);
       if (!brand) {
-        return res.status(404).json({ message: "Brand not found" });
+        return res.status(500).json({ message: "Brand not found" });
       }
       await brand.updateOne({ $push: { watches: watch._id } });
     }
+
     try {
       const newWatch = await watch.save();
       res.status(200).json(newWatch);
@@ -102,6 +107,9 @@ const watchesControllers = {
         watch,
         { new: true }
       );
+      if (!updatedWatch) {
+        return res.status(404).json({ message: "Watch not found" });
+      }
       res.status(200).json(updatedWatch);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -110,12 +118,14 @@ const watchesControllers = {
   //deleteWatch
   deleteWatch: async (req, res) => {
     try {
-      const watch = await Watches.findById(req.params.id);
+      const watch = await Watches.findByIdAndDelete(req.params.id);
       if (!watch) {
         return res.status(404).json({ message: "Watch not found" });
       }
-      await watch.remove();
-      res.status(200).json({ message: "Watch deleted" });
+      await Brands.findByIdAndUpdate(watch.brand, {
+        $pull: { watches: watch._id },
+      });
+      res.status(200).json({ message: "Watch deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -118,6 +118,9 @@ const authControllers = {
       if (!validPassword) {
         return res.status(400).json({ message: "Incorrect old password" });
       }
+      if (await bcrypt.compare(newPassword, member.password)) {
+        return res.status(400).json({ message: "same password" });
+      }
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newPassword, salt);
       member.password = hashedPassword;
@@ -147,6 +150,23 @@ const authControllers = {
       member.yob = yobDate;
       await member.save();
       res.status(200).json({ message: "Member updated successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  //delete member
+  deleteMember: async (req, res) => {
+    try {
+      const { memberName } = req.params;
+      const member = await Member.findOne({
+        memberName,
+      });
+      if (!member) {
+        return res.status(404).json({ message: "Member not found" });
+      }
+      await member.remove();
+      res.status(200).json({ message: "Member deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -39,8 +39,13 @@ const brandController = {
   //deleteBrand
   deleteBrand: async (req, res) => {
     try {
-      const brand = await Brand.findByIdAndDelete(req.params.id);
-      res.status(200).json({ message: "Brand deleted successfully" });
+      const brand = await Brand.findById(req.params.id);
+      if (brand.watches.length === 0) {
+        await Brand.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "Brand deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Cannot delete because have watches" });
+      }
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
