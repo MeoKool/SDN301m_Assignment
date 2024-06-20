@@ -1,9 +1,19 @@
 const authControllers = require("../Controllers/authControllers");
 const middleWareControllers = require("../controllers/middleWareControllers");
+const middleValidation = require("../controllers/middleWareValidation");
+
 const router = require("express").Router();
 
-router.post("/createUser", authControllers.createUser);
-router.post("/Login", authControllers.loginMember);
+router.post(
+  "/createUser",
+  middleValidation.validateCreateUser,
+  authControllers.createUser
+);
+router.post(
+  "/Login",
+  middleValidation.validateLogin,
+  authControllers.loginMember
+);
 router.post(
   "/changePassword",
   middleWareControllers.verifyToken,

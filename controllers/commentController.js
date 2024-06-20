@@ -3,23 +3,27 @@ const Watch = require("../models/Watches");
 const commentController = {
   //createComment
   createComment: async (req, res) => {
-    const watch = await Watch.findById(req.params.watchId);
-    const existingComment = watch.comments.find(
-      (comment) => comment.author.toString() === req.body.author
-    );
-    if (existingComment) {
-      return res
-        .status(400)
-        .send("Each author can only create one comment per watch.");
+    try {
+      const watch = await Watch.findById(req.params.watchId);
+      const existingComment = watch.comments.find(
+        (comment) => comment.author.toString() === req.body.author
+      );
+      if (existingComment) {
+        return res
+          .status(400)
+          .send("Each author can only create one comment per watch.");
+      }
+      const comment = {
+        rating: req.body.rating,
+        content: req.body.content,
+        author: req.body.author,
+      };
+      watch.comments.push(comment);
+      await watch.save();
+      res.status(200).send(watch);
+    } catch (error) {
+      res.status(500).send({ message: error.message });
     }
-    const comment = {
-      rating: req.body.rating,
-      content: req.body.content,
-      author: req.body.author,
-    };
-    watch.comments.push(comment);
-    await watch.save();
-    res.status(200).send(watch);
   },
   //getAllComments
   getAllComments: async (req, res) => {
