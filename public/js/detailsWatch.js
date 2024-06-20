@@ -138,6 +138,11 @@ function submitFeedback(watchId) {
           title: "Opps",
           text: "You can only comment once time",
         });
+      } else if (response.status === 401) {
+        Swal.fire({
+          icon: "error",
+          title: "Unauthorized!",
+        });
       }
     })
     .catch((error) => {
