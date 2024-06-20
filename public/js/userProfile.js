@@ -55,11 +55,11 @@ document.getElementById("submitButton").addEventListener("click", () => {
   var yob = document.getElementById("yobInput").value;
   var dateOfBirth = new Date(yob);
   var formattedDate =
-    ("0" + dateOfBirth.getDate()).slice(-2) +
+    dateOfBirth.getFullYear() +
     "-" +
     ("0" + (dateOfBirth.getMonth() + 1)).slice(-2) +
     "-" +
-    dateOfBirth.getFullYear();
+    ("0" + dateOfBirth.getDate()).slice(-2);
 
   console.log(name, formattedDate);
   fetch(`http://localhost:5000/v1/auth/updateMember/${memberName}`, {

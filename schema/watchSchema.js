@@ -14,13 +14,11 @@ const watchSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: [true, "Price is required"],
-      min: [1, "Price must be at least 1"],
     },
     Automatic: { type: Boolean, default: false },
     watchDescription: {
       type: String,
       required: [true, "Watch description is required"],
-      minlength: [10, "Description must be at least 10 characters long"],
     },
     comments: [commentSchema],
     brand: {

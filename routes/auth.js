@@ -6,7 +6,7 @@ const router = require("express").Router();
 
 router.post(
   "/createUser",
-  middleValidation.validateCreateUser,
+  middleValidation.validateCreateMember,
   authControllers.createUser
 );
 router.post(
@@ -22,6 +22,7 @@ router.post(
 router.put(
   "/updateMember/:memberName",
   middleWareControllers.verifyToken,
+  middleValidation.validateUpdateMember,
   authControllers.updateMember
 );
 router.get("/getByMemberName/:memberName", authControllers.getByMemberName);
