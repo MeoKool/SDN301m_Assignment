@@ -16,6 +16,7 @@ router.post(
 );
 router.post(
   "/changePassword",
+  middleValidation.validateChangePassword,
   middleWareControllers.verifyToken,
   authControllers.changePassword
 );

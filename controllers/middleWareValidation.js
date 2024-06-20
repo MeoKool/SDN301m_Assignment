@@ -53,7 +53,7 @@ const validateLogin = [
     next();
   },
 ];
-//validate Update
+//validate UpdateMember
 const validateUpdateMember = [
   body("name")
     .not()
@@ -82,10 +82,32 @@ const validateUpdateMember = [
     next();
   },
 ];
+// validate ChangePassword
+const validateChangePassword = [
+  body("memberName")
+    .isLength({ min: 5 })
+    .withMessage("memberName must be at least 5 characters long"),
+  body("oldPassword")
+    .isLength({ min: 6 })
+    .withMessage("Old Password must be at least 6 characters long"),
+  body("newPassword")
+    .isLength({ min: 6 })
+    .withMessage("New password must be at least 6 characters long"),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const messages = errors.array().map((error) => error.msg);
+      return res.status(400).json(messages);
+    }
+    next();
+  },
+];
 const middleWareValidation = {
   validateCreateMember,
   validateLogin,
   validateUpdateMember,
+  validateChangePassword,
 };
 
 module.exports = middleWareValidation;
